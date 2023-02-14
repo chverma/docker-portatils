@@ -11,15 +11,17 @@ services:
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
-            - "./mysql:/var/lib/mysql"
+      - "./mysql:/var/lib/mysql"
   app:
+    image: keymetrics/pm2:14-alpine
     depends_on:
       - mysqldb
-    build: ./app
+    working_dir: /app
+    
     restart: unless-stopped
     env_file: ./.env
-    # volumes:
-            #       - "./app:/app"
+    volumes:
+      - "./app:/app"
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:

@@ -20,9 +20,9 @@ const db = require("./app/models");
 
 db.sequelize.sync();
 // // drop the table if it already exists
-db.sequelize.sync({ force: true }).then(() => {
+/*db.sequelize.sync({ force: true }).then(() => {
    console.log("Drop and re-sync db.");
-});
+});*/
 
 
 app.use(express.static('./app/static'));

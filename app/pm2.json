@@ -1,0 +1,13 @@
+{
+  "apps": [{
+    "name": "portatils",
+    "script": "npm install && npm start",
+    "instances": 0,
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production" : {
+      "NODE_ENV": "production"
+    }
+  }]
+}
