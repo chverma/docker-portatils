@@ -1,0 +1,53 @@
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    function getPortsCounters() {
+        fetch("/api/ddosrequests/src")
+            .then(response => {
+                return response.json();
+            }).then(jsonData => {
+                console.log(jsonData)
+                jsonData = jsonData.filter(checkNum);
+
+                function checkNum(elem) {
+                    return elem.num_occ >= 50;
+                }
+                const data = {
+                    labels: jsonData.map(row => row.srcMac),
+                    datasets: [{
+                        label: 'Num. occurrences by mac',
+                        data: jsonData.map(row => row.num_occ),
+                        //backgroundColor: Object.values(Utils.CHART_COLORS),
+                    }]
+                };
+                const config = {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Num. occurrences by mac'
+                            }
+                        }
+                    },
+                };
+                new Chart(ctx,
+                    config);
+            });
+
+
+
+    }
+    getPortsCounters();
+</script>
